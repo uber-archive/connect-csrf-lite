@@ -18,21 +18,26 @@ var connectCsrf = require('connect-csrf-lite');
 var utils = require('./utils');
 var app = connect();
 
-// Middleware to create/retrieve `req.csrfToken` using whatever method you choose
+// Middleware to create/retrieve `req.csrfToken`. This example uses cookie sessions.
+app.use(connect.cookieParser());
+app.use(connect.cookieSession({ secret: 'my-secret' }));
 app.use(function (req, res, next) {
-  req.csrfToken = utils.createOrRetrieveToken();
+  if (!req.session.csrfToken) {
+    req.session.csrfToken = utils.createToken();
+  }
+  req.csrfToken = req.session.csrfToken;
   next();
 });
 
 app.use(connectCsrf());
 ```
 
-The middleware takes the token set at `req.csrfToken` (or wherever you desire)
-and validates it against `x-csrf-token` (set in `body`, `headers`, etc.) for
-all requests that mutate state.
+The middleware takes the token set at `req.csrfToken` (configurable with the
+`tokenKey` option) and validates it against `x-csrf-token` present in the
+body (configurable with the `dataKey` option) for all requests that mutate state.
 
-If a CSRF token is not set on the request object, one will be created for you;
-however, you will still need to handle the session storage and retrieval for
+If a CSRF token is not set on the request object, one will be created for you.
+You will still need to handle the session storage and retrieval for
 subsequent requests.
 
 ## Constructor Options
