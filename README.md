@@ -40,6 +40,17 @@ If a CSRF token is not set on the request object, one will be created for you.
 You will still need to handle the session storage and retrieval for
 subsequent requests.
 
+#### `csrfInput()`
+
+A helper method to create a hidden input with the CSRF token is provided for
+use in your forms (available at `req.csrfToken` and `res.locals.csrfToken`):
+
+``` jade
+form
+  != csrfInput()
+  input(type="submit")
+```
+
 ## Constructor Options
 
 ``` js
