@@ -1,6 +1,7 @@
 var expect = require('chai').expect;
 var express = require('express');
 var request = require('request');
+var httpUtils = require('request-mocha')(request);
 var connectCsrf = require('../lib/connect-csrf-lite');
 var utils = require('./utils');
 
@@ -25,9 +26,9 @@ describe('An express server with connect-csrf-lite', function () {
     ]);
 
     describe('with a POST request received with a CSRF token', function () {
-      utils.saveRequest('http://localhost:1337');
+      httpUtils.save('http://localhost:1337');
       before(function makeCSRFRequest (done) {
-        utils._saveRequest({
+        httpUtils._save({
           method: 'POST',
           url: 'http://localhost:1337',
           form: JSON.parse(this.body)
@@ -41,7 +42,7 @@ describe('An express server with connect-csrf-lite', function () {
       });
     });
     describe('with a POST request received without a CSRF token', function () {
-      utils.saveRequest({
+      httpUtils.save({
         method: 'POST',
         url: 'http://localhost:1337'
       });
@@ -61,7 +62,7 @@ describe('An express server with connect-csrf-lite', function () {
         res.send(req.csrfToken);
       }
     ]);
-    utils.saveRequest('http://localhost:1337');
+    httpUtils.save('http://localhost:1337');
 
     it('should create a 32-char random token at req.csrfToken', function () {
       expect(this.err).to.eql(null);
@@ -78,7 +79,7 @@ describe('An express server with connect-csrf-lite', function () {
         res.send(res.locals.csrfInput());
       }
     ]);
-    utils.saveRequest('http://localhost:1337');
+    httpUtils.save('http://localhost:1337');
 
     it('should include x-csrf-token input', function () {
       expect(this.err).to.eql(null);
