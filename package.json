@@ -1,0 +1,49 @@
+{
+  "name": "connect-csrf-lite",
+  "description": "CSRF validation middleware for Connect/Express",
+  "version": "0.1.0",
+  "homepage": "https://github.com/uber/connect-csrf-lite",
+  "author": {
+    "name": "Matt Morgan",
+    "email": "matt@mlmorg.com",
+    "url": "http://mlmorg.com"
+  },
+  "keywords": [
+    "connect",
+    "express",
+    "csrf",
+    "security"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/uber/connect-csrf-lite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uber/connect-csrf-lite/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/uber/connect-csrf-lite/blob/master/LICENSE"
+    }
+  ],
+  "main": "lib/connect-csrf-lite",
+  "dependencies": {
+    "csrf-lite": "~0.1.0",
+    "obj-extend": "~0.1.0",
+    "connect": "~2.12.0"
+  },
+  "devDependencies": {
+    "chai": "~1.8.1",
+    "express": "~3.4.7",
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-jshint": "~0.7.2",
+    "mocha": "~1.15.1",
+    "request": "~2.29.0",
+    "request-mocha": "~0.2.0"
+  },
+  "scripts": {
+    "test": "grunt && NODE_ENV=test mocha -R spec"
+  }
+}
